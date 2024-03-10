@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense, lazy } from "react";
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+const Dashboard = lazy(() => import("./components/Dasboard/Dashboard"));
+const ConsumptionData = lazy(() =>
+  import("./components/ConsumptionPage/ConsumptionData")
+);
+const AboutUS = lazy(() => import("./components/AboutUs/AboutUs"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <BrowserRouter>
+        <Suspense
+          fallback={
+            <div className="text-black flex justify-center font-xl   items-center font-xl  p-5 rounded-lg">
+              Loading...
+            </div>
+          }
         >
-          Learn React
-        </a>
-      </header>
+          <Routes>
+            <Route path="/" element={<Dashboard />}>
+              <Route index element={<ConsumptionData />} />
+              {/* <Route path="/data-table" element={<EVDataTable />} /> */}
+              <Route path="/about" element={<AboutUS />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
+
+// auAj3SnVWITZ8XoTdW6K9_r1CmoC7m__mAA-YTgcyC8
